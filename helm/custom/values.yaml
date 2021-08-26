@@ -1,0 +1,4 @@
+
+nginxversion: 1.14.2 
+
+replicas: 2

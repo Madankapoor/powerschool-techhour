@@ -1,0 +1,22 @@
+{{- $releaseName := (include "customchart.releasename" .) }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $releaseName }}-deployment
+  labels:
+    app: {{ $releaseName }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: {{ $releaseName }}
+  template:
+    metadata:
+      labels:
+        app: {{ $releaseName }}
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:{{ .Values.nginxversion }}
+        ports:
+        - containerPort: 80

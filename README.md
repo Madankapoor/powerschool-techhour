@@ -48,7 +48,7 @@ We are using minikube for demo. Lets expose the nginx deployment on the nodeport
 To get the ip address of the minikube `minikube ip`
 
 ```bash
-kubectl apply -f service-nodeport.yaml
+kubectl apply -f ./service/service-nodeport.yaml
 ```
 
 To see the auto allocated nodePort
@@ -62,4 +62,21 @@ kubectl get svc | grep nginx-service | cut -d':' -f 2 | cut -d'/' -f 1
 curl http://192.168.64.8:32690/
 
 curl http://$(minikube ip):$(kubectl get services | grep nginx-service | cut -d':' -f 2 | cut -d'/' -f 1)/
+```
+
+
+## Demo 3 - Helm
+
+Helm chart - Test generated Yaml files
+```bash
+helm template customnginx ./helm/referencechart
+```
+
+Install or upgrade helm chart 
+```
+helm upgrade customnginx ./helm/referencechart --install --wait
+```
+
+```
+helm upgrade customnginx ./helm/referencechart --install --wait -f ./helm/custom/values.yaml
 ```

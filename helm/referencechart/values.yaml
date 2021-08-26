@@ -1,0 +1,5 @@
+
+
+nginxversion: latest 
+
+replicas: 3

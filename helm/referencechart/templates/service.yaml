@@ -1,0 +1,14 @@
+{{- $releaseName := (include "customchart.releasename" .) }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $releaseName }}-service
+spec:
+  type: NodePort
+  selector:
+    app: {{ $releaseName }}
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      #nodePort: Auto allocated if not specified
