@@ -6,7 +6,18 @@ You can try it out on
 2. Orielly Sandbox (For quick setup) https://learning.oreilly.com/scenarios/kubernetes-sandbox/9781492062820/
 
 
-## Demo 1 
+## Demo 1 - Rolling Deployments
+
+Pod creation via imperative commands.
+```bash
+kubectl run nginx --image=nginx
+```
+
+Generating YAML via imperative command.
+
+```bash
+kubectl run nginx --image=nginx --dry-run -o yaml > pod.yaml
+```
 
 Rolling Deployments Demo
 
@@ -30,5 +41,25 @@ To revert to previous deployment
 kubectl rollout undo  deployment/nginx-deployment 
 ```
 
-## Demo 2 
+## Demo 2 - Service
 
+We are using minikube for demo. Lets expose the nginx deployment on the nodeport.
+
+To get the ip address of the minikube `minikube ip`
+
+```bash
+kubectl apply -f service-nodeport.yaml
+```
+
+To see the auto allocated nodePort
+```bash
+kubectl get svc | grep nginx-service 
+kubectl get svc | grep nginx-service | cut -d':' -f 2 | cut -d'/' -f 1
+```
+
+
+```bash
+curl http://192.168.64.8:32690/
+
+curl http://$(minikube ip):$(kubectl get services | grep nginx-service | cut -d':' -f 2 | cut -d'/' -f 1)/
+```
